@@ -1,0 +1,5 @@
+Variables: You can declare variables using the def keyword or explicitly specify the data type.
+=================================
+def name = "John"
+String message = "Hello, World!"
+=================================
