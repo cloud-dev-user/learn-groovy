@@ -1,0 +1,5 @@
+String literals: Strings in Groovy can be defined using single quotes or double quotes.
+====================================
+def name = 'John'
+def message = "Hello, $name!"
+====================================
