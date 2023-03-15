@@ -1,0 +1,8 @@
+Comments: You can use // for single-line comments and /* */ for multi-line comments.
+===========================
+// Single-line comment
+/*
+Multi-line
+comment
+*/
+============================
