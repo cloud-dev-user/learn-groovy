@@ -1,0 +1,5 @@
+Strings: You can define string literals using double quotes " " or triple quotes """ """. String interpolation is also supported using ${}.
+=====================================================
+def name = "John"
+println "Hello, ${name}!" // prints "Hello, John!"
+=====================================================
