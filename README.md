@@ -1,4 +1,4 @@
-# learn-groovy
+# learn-groovy-development
 
 Instructions to Install groovy on Linux. Prequisite for Groovy is Java. make sure you have java-11 installed on your machine.
 
