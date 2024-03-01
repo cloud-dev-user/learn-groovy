@@ -1,0 +1,88 @@
+pipeline {
+    agent any
+    
+    parameters {
+        choice(name: 'ENVIRONMENT', choices: ['Development', 'Staging', 'Production'], description: 'Select deployment environment')
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    sh 'mvn clean package'
+                }
+            }
+        }
+        
+        stage('Unit Test') {
+            steps {
+                script {
+                    sh 'mvn test'
+                }
+            }
+        }
+        
+        stage('Integration Test') {
+            steps {
+                parallel(
+                    "Database Test": {
+                        script {
+                            sh 'mvn db-test'
+                        }
+                    },
+                    "API Test": {
+                        script {
+                            sh 'mvn api-test'
+                        }
+                    }
+                )
+            }
+        }
+        
+        stage('Deploy') {
+            when {
+                expression {
+                    return params.ENVIRONMENT in ['Staging', 'Production']
+                }
+            }
+            steps {
+                script {
+                    if (params.ENVIRONMENT == 'Staging') {
+                        deployToStaging()
+                    } else {
+                        deployToProduction()
+                    }
+                }
+            }
+        }
+    }
+    
+    post {
+        success {
+            slackSend channel: '#notifications',
+                      color: 'good',
+                      message: "Pipeline completed successfully for ${env.JOB_NAME} - ${env.BUILD_NUMBER} on ${params.ENVIRONMENT}"
+        }
+        failure {
+            slackSend channel: '#notifications',
+                      color: 'danger',
+                      message: "Pipeline failed for ${env.JOB_NAME} - ${env.BUILD_NUMBER} on ${params.ENVIRONMENT}"
+        }
+    }
+}
+
+def deployToStaging() {
+    // Deployment to staging environment
+    sh 'scp target/*.war user@staging-server:/opt/applications'
+}
+
+def deployToProduction() {
+    // Deployment to production environment
+    sh 'scp target/*.war user@production-server:/opt/applications'
+}
