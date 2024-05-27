@@ -6,8 +6,8 @@ Instructions to Install groovy on Linux. Prequisite for Groovy is Java. make sur
 ```````````````````````````````````````````````
   $ cd /home/rocky
   $ wget https://groovy.jfrog.io/artifactory/dist-release-local/groovy-zips/apache-groovy-binary-4.0.20.zip
-  $ unzip apache-groovy-sdk-4.0.10.zip
-  $ mv apache-groovy-sdk-4.0.10 groovy4
+  $ unzip apache-groovy-sdk-4.0.20.zip
+  $ mv apache-groovy-sdk-4.0.20 groovy4
   $ export PATH=$PATH:/home/rocky/grrovy4/bin
   $ groovy --version
 ```````````````````````````````````````````````
